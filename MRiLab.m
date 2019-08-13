@@ -10,6 +10,6 @@ function MRiLab
     rmpath(genpath([pathstr filesep '.git']));
     rmpath(genpath([pathstr filesep 'Doc']));
     % Open MRiLab main panel
-    SimuPanel(pathstr);
+    SimuPanel(pathstr); 
     clear pathstr name ext
 end

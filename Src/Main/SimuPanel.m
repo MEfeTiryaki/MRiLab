@@ -58,10 +58,10 @@ function SimuPanel_OpeningFcn(hObject, eventdata, handles, varargin)
 %MRiLab('Welcome')
 % clc;
 
-disp(' __       __  _______   __  __                 __           ');       
-disp('|  \     /  \|       \ |  \|  \               |  \          ');      
+disp(' __       __  _______   __  __                 __           ');
+disp('|  \     /  \|       \ |  \|  \               |  \          ');
 disp('| $$\   /  $$| $$$$$$$\ \$$| $$       ______  | $$___       ');
-disp('| $$$\ /  $$$| $$__| $$|  \| $$      |      \ | $$    \     '); 
+disp('| $$$\ /  $$$| $$__| $$|  \| $$      |      \ | $$    \     ');
 disp('| $$$$\  $$$$| $$    $$| $$| $$       \$$$$$$\| $$$$$$$\    ');
 disp('| $$\$$ $$ $$| $$$$$$$\| $$| $$      /      $$| $$  | $$    ');
 disp('| $$ \$$$| $$| $$  | $$| $$| $$_____|  $$$$$$$| $$__/ $$    ');
@@ -195,7 +195,7 @@ set(uimenu_handle,'Checked','on');
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = SimuPanel_OutputFcn(hObject, eventdata, handles) 
+function varargout = SimuPanel_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -385,8 +385,8 @@ end
 SelCont=Conts{get(handles.VObjType_popupmenu,'Value')};
 img=SelMx(:,:,:,str2double(SelCont)); % preview chosen content
 
-% out_m=DoUpDownSample(img(:,:,ceil(end/2)),ceil(col/2),ceil(row/2),0,2); 
-out_m=img(:,:,ceil((end+1)/2)); 
+% out_m=DoUpDownSample(img(:,:,ceil(end/2)),ceil(col/2),ceil(row/2),0,2);
+out_m=img(:,:,ceil((end+1)/2));
 axes(handles.VObjSpinMap_axes);
 cla(handles.VObjSpinMap_axes);
 imagesc(out_m);
@@ -433,7 +433,7 @@ SelCont=Conts{get(handles.VObjType_popupmenu,'Value')};
 img=SelMx(:,:,:,str2double(SelCont)); % preview chosen content
 
 [row,col,layer]=size(img);
-Min_D=min(min(min(img))); 
+Min_D=min(min(min(img)));
 Max_D=max(max(max(img)));
 handles.AMatrix=img;
 handles.SMatrix=permute(handles.AMatrix,[3 1 2]); % Sagittal Matrix
@@ -695,7 +695,7 @@ try
     % Preserve VObj VMag
     VTmpObj=VObj;
     VTmpMag=VMag;
-    
+
     % Create Executing Virtual Structure VOex VMex
     VOex=VObj;
     VOex.Rho(repmat(VMag.FRange,[1,1,1,VObj.TypeNum])==0)=[];
@@ -704,7 +704,7 @@ try
     VOex.Mz(repmat(VMag.FRange,[1,1,1,VObj.SpinNum,VObj.TypeNum])==0)=[];
     VOex.My(repmat(VMag.FRange,[1,1,1,VObj.SpinNum,VObj.TypeNum])==0)=[];
     VOex.Mx(repmat(VMag.FRange,[1,1,1,VObj.SpinNum,VObj.TypeNum])==0)=[];
-    
+
     VMex=VMag;
     VMex.Gzgrid(VMag.FRange==0)=[];
     VMex.Gygrid(VMag.FRange==0)=[];
@@ -712,7 +712,7 @@ try
     VMex.dB0(VMag.FRange==0)=[];
     VMex.dWRnd(repmat(VMag.FRange,[1,1,1,VObj.SpinNum,VObj.TypeNum])==0)=[];
     VMex.dWRnd(isnan(VMex.dWRnd))=0; % NaN is not supported in C code
-    
+
     % Kernel uses Mz to determine SpinMx size
     VOex.Rho=reshape(VOex.Rho,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),VObj.TypeNum]);
     VOex.T1=reshape(VOex.T1,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),VObj.TypeNum]);
@@ -720,45 +720,45 @@ try
     VOex.Mz=reshape(VOex.Mz,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),VObj.SpinNum,VObj.TypeNum]);
     VOex.Mx=reshape(VOex.Mx,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),VObj.SpinNum,VObj.TypeNum]);
     VOex.My=reshape(VOex.My,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),VObj.SpinNum,VObj.TypeNum]);
-    
+
     if isfield(VCtl, 'MT_Flag')
         if strcmp(VCtl.MT_Flag, 'on')
             VOex.K(repmat(VMag.FRange,[1,1,1,(VObj.TypeNum)^2])==0)=[];
             VOex.K=reshape(VOex.K,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),(VObj.TypeNum)^2]);
         end
     end
-    
+
     if isfield(VCtl, 'ME_Flag')
         if strcmp(VCtl.ME_Flag, 'on')
             VOex.K(repmat(VMag.FRange,[1,1,1,(VObj.TypeNum)^2])==0)=[];
             VOex.K=reshape(VOex.K,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),(VObj.TypeNum)^2]);
         end
     end
-    
+
     if isfield(VCtl, 'CEST_Flag')
         if strcmp(VCtl.CEST_Flag, 'on')
             VOex.K(repmat(VMag.FRange,[1,1,1,2*(VObj.TypeNum-1)])==0)=[];
             VOex.K=reshape(VOex.K,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),2*(VObj.TypeNum-1)]);
         end
     end
-    
+
     if isfield(VCtl, 'GM_Flag')
         if strcmp(VCtl.GM_Flag, 'on')
             VOex.K(repmat(VMag.FRange,[1,1,1,VObj.TypeNum, VObj.TypeNum])==0)=[];
             VOex.K=reshape(VOex.K,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),VObj.TypeNum,VObj.TypeNum]);
         end
     end
-    
+
     VMex.Gzgrid=reshape(VMex.Gzgrid,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3)))]);
     VMex.Gxgrid=reshape(VMex.Gxgrid,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3)))]);
     VMex.Gygrid=reshape(VMex.Gygrid,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3)))]);
     VMex.dB0=reshape(VMex.dB0,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3)))]);
     VMex.dWRnd=reshape(VMex.dWRnd,[max(max(sum(VMag.FRange,1))),max(max(sum(VMag.FRange,2))),max(max(sum(VMag.FRange,3))),VObj.SpinNum,VObj.TypeNum]);
-    
+
     [row,col,layer]=size(VOex.Mz);
     VVar.ObjLoc = [((col+1)/2)*VOex.XDimRes; ((row+1)/2)*VOex.YDimRes ; ((layer+1)/2)*VOex.ZDimRes]; % Set matrix center as Object position for motion simulation
     VVar.ObjTurnLoc = [((col+1)/2)*VOex.XDimRes; ((row+1)/2)*VOex.YDimRes ; ((layer+1)/2)*VOex.ZDimRes]; % Set matrix center as Object origin for motion simulation
-    
+
     VOex.MaxMz = max(VOex.Mz(:));
     VOex.MaxMy = max(VOex.My(:));
     VOex.MaxMx = max(VOex.Mx(:));
@@ -766,25 +766,44 @@ try
     VOex.MaxT1 = max(VOex.T1(:));
     VOex.MaxT2 = max(VOex.T2(:));
     VOex.MaxdWRnd = max(VMex.dWRnd(:));
-    
+
     % Spin execution
     VObj=VOex;
     VMag=VMex;
-    
+    %%%%%%%%%%%%%%%%%%MY CODE%%%%%%%%%%%%%%%
+    mup=1e-7;
+    m=0.0005;
+    x1=-0.04:0.001:0.04;
+    y1=-0.04:0.001:0.04;
+    z1=-0.04:0.001:0.04;
+    [x,y,z]=meshgrid(x1,y1,z1);
+    B=B_dipole([0,0,0,0,0,m], [x(:),y(:),z(:)]);
+    B1=reshape(B,[length(x1),length(y1),length(z1),3]);
+    Bz = squeeze(B1(:,:,:,1));
+    By = squeeze(B1(:,:,:,2));
+    Bx = squeeze(B1(:,:,:,3));
+    Bx(41,41,41)=0;
+    By(41,41,41)=0;
+    Bz(41,41,41)=0.05;
+
+    VMag.Gygrid=VMag.Gygrid+By(1:80,1:80,40:42);
+    VMag.Gxgrid=VMag.Gxgrid+Bx(1:80,1:80,40:42);
+    VMag.Gzgrid=VMag.Gzgrid+Bz(1:80,1:80,40:42);
+    % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     DoScanSeriesUpd(handles,2);
     handles=guidata(handles.SimuPanel_figure);
     pause(0.01);
-    
+
     % Scan Process
     set(hObject,'String','Pgen...');
     pause(0.01);
     DoPulseGen(handles); % Generate Pulse line
     VCtl.RunMode=int32(0); % Image scan
     DoDataTypeConv(handles);
-    
+
     VCtl.MaxThreadNum=int32(handles.CPUInfo.NumThreads);
     VCtl.ActiveThreadNum=int32(0);
-    
+
     Exe = 0;
     for i = 1:99 % check first 99 possible GPU device
         if isfield(handles,['GPU' num2str(i) '_uimenu'])
@@ -867,7 +886,7 @@ try
             end
         end
     end
-    
+
     if Exe == 0
         if isfield(handles,'CPU_uimenu')
             if strcmp(get(handles.CPU_uimenu,'Checked'),'on')
@@ -888,7 +907,7 @@ try
                         error('CPU engine currently doesn''t support General Model.');
                     end
                 end
-                
+
                 if handles.BatchFlag==1
                     error('DoScanAtCPU');
                 end
@@ -920,16 +939,16 @@ catch me
             handles.SimName=VCtl.SeriesName;
 
             DoUpdateBatch(handles);
-            
+
             handles=guidata(handles.SimuPanel_figure);
             handles.BatchFlag=0;
             DoScanSeriesUpd(handles,5);
             handles=guidata(handles.SimuPanel_figure);
             DoScanSeriesUpd(handles,0);
-            
+
             str = get(handles.Batch_pushbutton,'String');
             set(handles.Batch_pushbutton,'String',['\_' num2str(str2num(str(3:end-2))+1) '_/']);
-            
+
         end
     else
         error_msg{1,1}='ERROR!!! Scan process aborted.';
@@ -1062,7 +1081,7 @@ if exist([handles.MRiLabPath filesep 'Tmp' filesep 'BatchData.mat'],'file')
     delete([handles.MRiLabPath filesep 'Tmp' filesep 'BatchData.mat']);
 end
 
-% try 
+% try
 %     gpuDevice([]); % deselect GPU, avoid Matlab for heating up GPU when idle?
 % catch me
 % end
@@ -1474,7 +1493,7 @@ tempaxes = gca;
 try
     if strcmp(get(gcf,'Selectiontype'),'alt')
         figure 			% Create a new figure
-        ax_new = axes; 
+        ax_new = axes;
         copyaxes(tempaxes, ax_new);
     end
 catch me

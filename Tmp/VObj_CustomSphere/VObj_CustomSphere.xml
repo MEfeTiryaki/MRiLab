@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MRiLabVObj Gyro="267538030" Model="$1'Normal','MT','ME','GM'" Name="VObj_CustomSphere"
+            Notes="Customized 3D Sphere Virtual Object"
+            Type="Water"
+            TypeNum="1"
+            XDim="1000"
+            XDimRes="0.0001"
+            YDim="1000"
+            YDimRes="0.0001"
+            ZDim="1000"
+            ZDimRes="0.0001">
+   <VObjCylinder Alpha="1" Color="r" Notes="Cylinder Object">
+      <Geometry CenterX="0" CenterY="0" CenterZ="0" FaceNum="20" Length="0.04" Radius="0.04"/>
+      <Property ChemShift="0" ECon="0.5 0.5 0.5" K="10" LineShapeFlag="0" MassDen="1000"
+                Rho="1"
+                T1="1"
+                T2="0.1"
+                T2Star="0.01"
+                TypeFlag="1"
+                TypeIdx="1"/>
+   </VObjCylinder>
+</MRiLabVObj>
