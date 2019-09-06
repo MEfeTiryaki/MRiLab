@@ -1,5 +1,5 @@
 %Dipole
-close all 
+close all
 clear
 clc
 mup=1e-7;
